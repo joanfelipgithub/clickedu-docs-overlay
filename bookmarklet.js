@@ -2,12 +2,67 @@
   'use strict';
   
   // =====================================================
+  // DOMAIN RESTRICTION - Only works on ClickEdu
+  // =====================================================
+  
+  const ALLOWED_DOMAINS = [
+    'insscf.clickedu.eu'
+  ];
+  
+  const ALLOWED_PATHS = [
+    '/sumari/index.php'
+  ];
+  
+  function isAllowedDomain() {
+    const hostname = window.location.hostname;
+    const pathname = window.location.pathname;
+    
+    // Check domain
+    const domainMatch = ALLOWED_DOMAINS.some(domain => 
+      hostname === domain || hostname.endsWith('.' + domain)
+    );
+    
+    if (!domainMatch) {
+      return {
+        allowed: false,
+        message: `⚠️ DOMINI NO AUTORITZAT\n\nAquest bookmarklet només funciona a:\n• ${ALLOWED_DOMAINS.join('\n• ')}\n\nDomini actual: ${hostname}`
+      };
+    }
+    
+    // Check path
+    const pathMatch = ALLOWED_PATHS.some(path => 
+      pathname.startsWith(path)
+    );
+    
+    if (!pathMatch) {
+      return {
+        allowed: false,
+        message: `⚠️ PÀGINA NO AUTORITZADA\n\nAquest bookmarklet només funciona a:\n• https://${ALLOWED_DOMAINS[0]}${ALLOWED_PATHS[0]}*\n\nPàgina actual: ${pathname}`
+      };
+    }
+    
+    return { allowed: true };
+  }
+  
+  // Check before proceeding
+  const domainCheck = isAllowedDomain();
+  if (!domainCheck.allowed) {
+    alert(domainCheck.message);
+    console.error('[SECURITY] Bookmarklet blocked on:', window.location.href);
+    console.error('[SECURITY] Allowed domains:', ALLOWED_DOMAINS);
+    console.error('[SECURITY] Allowed paths:', ALLOWED_PATHS);
+    return; // Stop execution
+  }
+  
+  console.log('[SECURITY] Domain check passed ✅');
+  
+  // =====================================================
   // CONFIGURATION
   // =====================================================
   
   const CONFIG = {
     backendAPI: 'https://clickedu-docs-api.clickedu-docs.workers.dev',
-    version: '1.0.0'
+    version: '1.0.1'  // Updated version
   };
   
   // =====================================================
@@ -22,6 +77,7 @@
       return;
     }
     
+    // Create full-screen overlay
     overlay = document.createElement('div');
     Object.assign(overlay.style, {
       position: 'fixed',
@@ -40,6 +96,7 @@
       fontFamily: 'Arial, sans-serif'
     });
     
+    // Loading message
     const loadingMsg = document.createElement('div');
     loadingMsg.textContent = '📥 Carregant documents...';
     Object.assign(loadingMsg.style, {
@@ -49,6 +106,7 @@
     });
     overlay.appendChild(loadingMsg);
     
+    // Close button
     const closeBtn = document.createElement('button');
     closeBtn.textContent = '✕';
     Object.assign(closeBtn.style, {
@@ -80,21 +138,33 @@
     
     document.body.appendChild(overlay);
     
+    // Load documents from backend
     loadDocs(overlay, loadingMsg);
     
-    overlay.addEventListener('click', (e) => {
-      if (e.target === overlay) overlay.style.display = 'none';
-    });
-    
+    // Keyboard shortcuts
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && overlay.style.display === 'flex') {
         overlay.style.display = 'none';
       }
     });
+    
+    // Click outside to close
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) {
+        overlay.style.display = 'none';
+      }
+    });
   }
+  
+  // =====================================================
+  // FETCH DOCUMENTS - Calls secure backend
+  // =====================================================
   
   async function loadDocs(overlay, loadingMsg) {
     try {
+      console.log('[INFO] Fetching documents from backend...');
+      
+      // Call YOUR backend (not Google directly)
       const response = await fetch(`${CONFIG.backendAPI}/api/documents`);
       
       if (!response.ok) {
@@ -107,15 +177,21 @@
         throw new Error(data.error || 'Failed to load documents');
       }
       
+      console.log('[SUCCESS] Loaded', Object.keys(data.documents).length, 'document groups');
+      
       loadingMsg.remove();
       buildUI(data.documents, overlay);
       
     } catch (error) {
       loadingMsg.remove();
       showError(`❌ Error: ${error.message}`, overlay);
-      console.error('Error loading documents:', error);
+      console.error('[ERROR] Failed to load documents:', error);
     }
   }
+  
+  // =====================================================
+  // BUILD UI - Display documents
+  // =====================================================
   
   function buildUI(groups, overlay) {
     const container = document.createElement('div');
@@ -130,6 +206,7 @@
       boxShadow: '0 10px 40px rgba(0,0,0,0.5)'
     });
     
+    // Title
     const title = document.createElement('h1');
     title.textContent = '📂 Documents InsSCF';
     Object.assign(title.style, {
@@ -141,10 +218,24 @@
     });
     container.appendChild(title);
     
+    // Security badge
+    const badge = document.createElement('div');
+    badge.innerHTML = '🔒 Només a insscf.clickedu.eu';
+    Object.assign(badge.style, {
+      textAlign: 'center',
+      fontSize: '14px',
+      color: '#28a745',
+      marginBottom: '20px',
+      fontWeight: 'bold'
+    });
+    container.appendChild(badge);
+    
+    // Document groups
     for (const [groupName, docs] of Object.entries(groups)) {
       const section = document.createElement('div');
       section.style.marginBottom = '30px';
       
+      // Group title
       const groupTitle = document.createElement('h2');
       groupTitle.textContent = groupName;
       Object.assign(groupTitle.style, {
@@ -156,6 +247,7 @@
       });
       section.appendChild(groupTitle);
       
+      // Document grid
       const grid = document.createElement('div');
       Object.assign(grid.style, {
         display: 'grid',
@@ -163,6 +255,7 @@
         gap: '15px'
       });
       
+      // Document buttons
       for (const doc of docs) {
         const btn = document.createElement('button');
         btn.textContent = doc.label;
@@ -179,6 +272,8 @@
           transition: 'all 0.2s',
           fontWeight: '500'
         });
+        
+        // Hover effects
         btn.onmouseover = () => {
           btn.style.transform = 'translateY(-3px)';
           btn.style.boxShadow = '0 6px 20px rgba(0,123,255,0.4)';
@@ -187,9 +282,13 @@
           btn.style.transform = 'translateY(0)';
           btn.style.boxShadow = '0 4px 12px rgba(0,123,255,0.3)';
         };
+        
+        // Click to open
         btn.onclick = () => {
+          console.log('[CLICK] Opening document:', doc.label);
           window.open(doc.url, '_blank');
         };
+        
         grid.appendChild(btn);
       }
       
@@ -199,6 +298,10 @@
     
     overlay.appendChild(container);
   }
+  
+  // =====================================================
+  // ERROR DISPLAY
+  // =====================================================
   
   function showError(message, overlay) {
     const errorBox = document.createElement('div');
@@ -212,13 +315,16 @@
       border: '3px solid #dc3545'
     });
     
+    const safeMessage = document.createElement('div');
+    safeMessage.textContent = message;
+    
     errorBox.innerHTML = `
       <div style="font-size: 64px; margin-bottom: 20px;">❌</div>
       <div style="font-size: 24px; font-weight: bold; color: #dc3545; margin-bottom: 15px;">
         Error
       </div>
       <div style="font-size: 18px; color: #333; margin-bottom: 20px;">
-        ${message}
+        ${safeMessage.innerHTML}
       </div>
       <button onclick="location.reload()" style="
         padding: 12px 24px;
@@ -237,7 +343,12 @@
     overlay.appendChild(errorBox);
   }
   
-  console.log('📂 ClickEdu Docs Overlay v' + CONFIG.version + ' loaded');
+  // =====================================================
+  // INITIALIZATION
+  // =====================================================
+  
+  console.log('📂 ClickEdu Docs Overlay v' + CONFIG.version + ' loaded ✅');
+  console.log('🔒 Domain restriction active');
   openOverlay();
   
 })();

@@ -65,14 +65,14 @@
             cursor: grab;
         }
 
-            a.bookmarklet:hover {
-                transform: translateY(-3px) scale(1.05);
-                box-shadow: 0 8px 25px rgba(40, 167, 69, 0.6);
-            }
+        a.bookmarklet:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.6);
+        }
 
-            a.bookmarklet:active {
-                cursor: grabbing;
-            }
+        a.bookmarklet:active {
+            cursor: grabbing;
+        }
 
         .warning {
             background: #fff3cd;
@@ -81,6 +81,15 @@
             padding: 20px;
             margin: 20px 0;
             border-left: 5px solid #ffc107;
+        }
+
+        .info {
+            background: #d1ecf1;
+            border: 2px solid #0c5460;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid #17a2b8;
         }
 
         .step {
@@ -111,15 +120,24 @@
             flex: 1;
         }
 
-            .step-content h3 {
-                margin: 0 0 10px 0;
-                color: #007bff;
-            }
+        .step-content h3 {
+            margin: 0 0 10px 0;
+            color: #007bff;
+        }
 
-            .step-content p {
-                margin: 0;
-                line-height: 1.6;
-            }
+        .step-content p {
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        code {
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #e83e8c;
+            font-size: 90%;
+        }
     </style>
 </head>
 <body>
@@ -140,9 +158,16 @@
                     👇 Arrossega aquest botó a la barra de marcadors 👇
                 </p>
                 <a class="bookmarklet"
-                   href="javascript:(function(){var s=document.createElement('script');s.src='https://joanfelipgithub.github.io/clickedu-docs-overlay/bookmarklet.js?v=1.0.0';document.body.appendChild(s);})();">
+                   href="javascript:(function(){var s=document.createElement('script');s.src='https://joanfelipgithub.github.io/clickedu-docs-overlay/bookmarklet.js?v=1.0.1';document.body.appendChild(s);})();">
                     📌 DocsINSSCF
                 </a>
+            </div>
+
+            <div class="info">
+                <strong>🔒 Restricció de Domini:</strong><br>
+                Aquest bookmarklet <strong>només funciona</strong> a:<br>
+                <code>https://insscf.clickedu.eu/sumari/index.php*</code><br><br>
+                <strong>📌 Recomanació:</strong> Utilitza <strong>Google Chrome</strong> per a millor compatibilitat.
             </div>
         </div>
 
@@ -160,8 +185,8 @@
             <div class="step">
                 <div class="step-number">2</div>
                 <div class="step-content">
-                    <h3>Ves a ClickEdu</h3>
-                    <p>Obre la pàgina de ClickEdu on vols accedir als documents</p>
+                    <h3>Ves a ClickEdu - Sumari</h3>
+                    <p>Obre <code>https://insscf.clickedu.eu/sumari/index.php</code> al ClickEdu</p>
                 </div>
             </div>
 
@@ -190,12 +215,13 @@
                 <li>✅ No hi ha API keys exposades al codi públic</li>
                 <li>✅ El codi és open source i pot ser revisat</li>
                 <li>✅ No recull ni emmagatzema dades personals</li>
+                <li>✅ <strong>Només funciona a insscf.clickedu.eu/sumari/index.php</strong></li>
             </ul>
         </div>
 
         <div class="section" style="text-align: center; background: #f8f9fa;">
             <p style="margin: 0; color: #666;">
-                💻 Desenvolupat amb ❤️ |
+                💻 Desenvolupat amb ❤️ | v1.0.1 |
                 <a href="https://github.com/joanfelipgithub/clickedu-docs-overlay" style="color: #007bff;">Codi Font a GitHub</a>
             </p>
         </div>

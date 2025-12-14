@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClickEdu Docs Overlay - Instal·lació</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            padding: 40px 20px;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #fff;
+            text-align: center;
+            font-size: 48px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .subtitle {
+            color: #fff;
+            text-align: center;
+            font-size: 20px;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .section {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            margin-bottom: 30px;
+        }
+
+        .bookmarklet-container {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 12px;
+            margin: 30px 0;
+        }
+
+        a.bookmarklet {
+            display: inline-block;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: #fff;
+            padding: 20px 40px;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 24px;
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+            transition: all 0.3s ease;
+            cursor: grab;
+        }
+
+            a.bookmarklet:hover {
+                transform: translateY(-3px) scale(1.05);
+                box-shadow: 0 8px 25px rgba(40, 167, 69, 0.6);
+            }
+
+            a.bookmarklet:active {
+                cursor: grabbing;
+            }
+
+        .warning {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid #ffc107;
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .step-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: #007bff;
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 20px;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+            .step-content h3 {
+                margin: 0 0 10px 0;
+                color: #007bff;
+            }
+
+            .step-content p {
+                margin: 0;
+                line-height: 1.6;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📂 Documents InsSCF</h1>
+        <div class="subtitle">Overlay Segur per a ClickEdu</div>
+
+        <div class="section">
+            <h2 style="text-align: center; color: #28a745;">🎯 Instal·lació del Bookmarklet</h2>
+
+            <div class="warning">
+                <strong>⚠️ IMPORTANT:</strong> Arrossega el botó verd a la teva barra de marcadors.
+                <strong>NO facis clic</strong>, només arrossega!
+            </div>
+
+            <div class="bookmarklet-container">
+                <p style="font-size: 18px; margin-bottom: 20px; color: #666;">
+                    👇 Arrossega aquest botó a la barra de marcadors 👇
+                </p>
+                <a class="bookmarklet"
+                   href="javascript:(function(){var s=document.createElement('script');s.src='https://YOUR-USERNAME.github.io/clickedu-docs-overlay/bookmarklet.js?v=1.0.0';document.body.appendChild(s);})();">
+                    📌 DocsINSSCF
+                </a>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 style="color: #007bff;">📖 Com utilitzar-lo</h2>
+
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Arrossega el botó</h3>
+                    <p>Agafa el botó verd "📌 DocsINSSCF" i arrossega'l a la barra de marcadors del teu navegador</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Ves a ClickEdu</h3>
+                    <p>Obre la pàgina de ClickEdu on vols accedir als documents</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Fes clic al marcador</h3>
+                    <p>Clica el marcador "DocsINSSCF" que acabes de crear</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h3>Gaudeix!</h3>
+                    <p>L'overlay apareixerà amb tots els teus documents organitzats per grups</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 style="color: #dc3545;">🔒 Seguretat</h2>
+            <p>Aquest bookmarklet és 100% segur:</p>
+            <ul>
+                <li>✅ Les dades es carreguen des del teu backend privat a Cloudflare</li>
+                <li>✅ No hi ha API keys exposades al codi públic</li>
+                <li>✅ El codi és open source i pot ser revisat</li>
+                <li>✅ No recull ni emmagatzema dades personals</li>
+            </ul>
+        </div>
+
+        <div class="section" style="text-align: center; background: #f8f9fa;">
+            <p style="margin: 0; color: #666;">
+                💻 Desenvolupat amb ❤️ |
+                <a href="https://github.com/joanfelipgithub/clickedu-docs-overlay" style="color: #007bff;">Codi Font a GitHub</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+    // Prevent clicking the bookmarklet link
+    document.querySelector('.bookmarklet').addEventListener('click', (e) => {
+      e.preventDefault();
+      alert('⚠️ No facis clic! Arrossega aquest botó a la barra de marcadors del teu navegador.');
+    });
+    </script>
+</body>
+</html>
